@@ -72,12 +72,12 @@ public class Airport {
         else if(getClass() != o.getClass())
             return false;
         Airport airport = (Airport) o;
-        return AirportName == airport.getAirportName()
-                && AirportCity == airport.getAirportCity()
-                && Country == airport.getCountry()
-                && IATA_Code == airport.getIATA_Code()
-                && Latitude == airport.getLatitude()
-                && Longitude == airport.getLongitude();
+        return AirportName.equals(airport.getAirportName())
+                && AirportCity.equals(airport.getAirportCity())
+                && Country.equals(airport.getCountry())
+                && IATA_Code.equals(airport.getIATA_Code())
+                && Latitude.equals(airport.getLatitude())
+                && Longitude.equals(airport.getLongitude());
 
 
     }
@@ -141,5 +141,6 @@ public class Airport {
         printMap(AirportMap);
 
     }
+
 
 }
