@@ -49,6 +49,8 @@ public class Route {
                 if(AirRoutesMap.containsKey(routeKey)){
                     // key already in map
                     routeList = AirRoutesMap.get(routeKey);
+//                    System.out.println("key: " + routeKey);
+//                    System.out.println("list: "+routeList);
                     AirRoutesMap.remove(routeKey, AirRoutesMap.get(routeKey));
                 }
                 else{
@@ -70,14 +72,6 @@ public class Route {
     }
 
 
-//    public static boolean myContains(HashMap<ArrayList<String>, ArrayList<String>> thisMap, ArrayList<String> thisList){
-//        for (final Map.Entry<ArrayList<String>, ArrayList<String>> entry : thisMap.entrySet()) {
-//            if (entry.getKey().contains(thisList)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 
     public static HashMap<ArrayList<String>, ArrayList<String>> AirlineRoutesFileReader(String filename){
         Scanner inputStream;
@@ -97,11 +91,13 @@ public class Route {
                 routeKey.add(splitStream[4]);  // destination airport code
                 routeKey.add(splitStream[7]);  // stops
 
+
                 ArrayList<String> routeList;
                 if(AirlineRoutesMap.containsKey(routeKey)){
                     // key already in map
                     routeList = AirlineRoutesMap.get(routeKey);
-                    System.out.println(routeList);
+//                    System.out.println("key: " + routeKey);
+//                    System.out.println("list: "+routeList);
                     AirlineRoutesMap.remove(routeKey, AirlineRoutesMap.get(routeKey));
                 }
                 else{
@@ -145,13 +141,63 @@ public class Route {
         }
     }
 
+    public static HashMap<String, String> findRoute(String start, String goal){
+
+        Queue<String> frontier = new ArrayDeque<>();  // frontier
+        ArrayList<String> explored_set = new ArrayList<>();  // explored set
+        ArrayList<String> successors;  // successor states
+        HashMap<String, String> ancestors = new HashMap<>();  // child-parent map
+
+        System.out.println("  >> start airport: " + start);
+        System.out.println("  >> goal airport: " + goal);
+        System.out.println("     >>> searching...");
+
+        // add root/start to frontier
+        frontier.add(start);
+
+        while(!(frontier.isEmpty())){
+            // remove node from frontier
+            String node = frontier.remove();
+//            System.out.println("current frontier: " + frontier);
+            // add node to explored set
+            explored_set.add(node);
+//            System.out.println("explored set: " + explored_set);
+
+            // goal test  *goal test at node selection, before expansion*
+
+            // generate successors
+            successors = AirRoutesMap.get(node);
+            System.out.println(node + " >> " + successors + "\n");
+            if(!successors.isEmpty()){
+                for(int i = 0; i < successors.size(); i++){
+                    if(!frontier.contains(successors.get(i)) && (!explored_set.contains(successors.get(i)))){
+                        String child = successors.get(i);
+                        ancestors.putIfAbsent(node, child);
+                        // goal test  *goal test at child generation, after expansion*
+                        if(child.equals(goal)){
+                            System.out.println("found goal: " + child);
+                            return ancestors;
+                        }
+                        frontier.add(child);
+                    }
+                }
+            }
+            else{
+                System.out.println("DeadEnd: no routes from current node " + node);
+            }
+        }
+        return null;
+    }
+
     public static void main(String [] args){
 
         AirRoutesMap = AirRouteFileReader("/Users/admin/Library/CloudStorage/OneDrive-AshesiUniversity/project_code/projects/Airliner Apps/Airliner Java/src/routes copy.csv");
-        printMap2(AirRoutesMap);
+//        printMap2(AirRoutesMap);
 
         AirlineRoutesMap = AirlineRoutesFileReader("/Users/admin/Library/CloudStorage/OneDrive-AshesiUniversity/project_code/projects/Airliner Apps/Airliner Java/src/routes copy.csv");
-        printMap(AirlineRoutesMap);
+//        printMap(AirlineRoutesMap);
+
+        findRoute("YYZ", "ACC");
 
 
 
