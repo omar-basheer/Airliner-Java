@@ -109,7 +109,7 @@ public class Route {
 
             }
             inputStream.close();
-            System.out.println("> Airport-Route map created...");
+            System.out.println("> Airline-Route map created...");
 
         }catch (FileNotFoundException e){
             System.out.println("error opening file: check that the input file is in the right directory and the given file name matches");
@@ -141,16 +141,17 @@ public class Route {
         }
     }
 
-    public static HashMap<String, String> findRoute(String start, String goal){
+    public static void findRoute(String start, String goal){
 
         Queue<String> frontier = new ArrayDeque<>();  // frontier
         ArrayList<String> explored_set = new ArrayList<>();  // explored set
         ArrayList<String> successors;  // successor states
+        ArrayList<String> solution_path;  // solution path
         HashMap<String, String> ancestors = new HashMap<>();  // child-parent map
 
         System.out.println("  >> start airport: " + start);
         System.out.println("  >> goal airport: " + goal);
-        System.out.println("     >>> searching...");
+        System.out.println("     >>> searching... ");
 
         // add root/start to frontier
         frontier.add(start);
@@ -167,16 +168,18 @@ public class Route {
 
             // generate successors
             successors = AirRoutesMap.get(node);
-            System.out.println(node + " >> " + successors + "\n");
-            if(!successors.isEmpty()){
+//            System.out.println(node + " >> " + successors + "\n");
+            if(successors.size() > 0){
                 for(int i = 0; i < successors.size(); i++){
                     if(!frontier.contains(successors.get(i)) && (!explored_set.contains(successors.get(i)))){
                         String child = successors.get(i);
-                        ancestors.putIfAbsent(node, child);
+                        ancestors.putIfAbsent(child, node);
                         // goal test  *goal test at child generation, after expansion*
                         if(child.equals(goal)){
                             System.out.println("found goal: " + child);
-                            return ancestors;
+                            solution_path = solutionPath(ancestors, child, start);
+                            System.out.println(solution_path);
+                            return;
                         }
                         frontier.add(child);
                     }
@@ -186,10 +189,30 @@ public class Route {
                 System.out.println("DeadEnd: no routes from current node " + node);
             }
         }
-        return null;
+    }
+    
+    public static ArrayList<String> solutionPath(HashMap<String, String> thisMap, String goal, String start){
+
+        ArrayList<String> path_from_goal = new ArrayList<>();
+        ArrayList<String> solution_path = new ArrayList<>();
+//        System.out.println(thisMap);
+        while(thisMap.get(goal) != null){
+            path_from_goal.add(goal);
+            String node = thisMap.get(goal);
+            path_from_goal.add(node);
+            goal = node;
+        }
+//        System.out.println(path_from_goal);
+        for(int i = path_from_goal.size()-1; i < path_from_goal.size() && i != -1; i--){
+            solution_path.add(path_from_goal.get(i));
+        }
+        return solution_path;
     }
 
+
     public static void main(String [] args){
+
+        System.out.println(" ");
 
         AirRoutesMap = AirRouteFileReader("/Users/admin/Library/CloudStorage/OneDrive-AshesiUniversity/project_code/projects/Airliner Apps/Airliner Java/src/routes copy.csv");
 //        printMap2(AirRoutesMap);
@@ -197,7 +220,7 @@ public class Route {
         AirlineRoutesMap = AirlineRoutesFileReader("/Users/admin/Library/CloudStorage/OneDrive-AshesiUniversity/project_code/projects/Airliner Apps/Airliner Java/src/routes copy.csv");
 //        printMap(AirlineRoutesMap);
 
-        findRoute("YYZ", "ACC");
+        findRoute("ACC", "OUA");
 
 
 
