@@ -1,3 +1,5 @@
+import HaversineFormula.HaversineDistance;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -65,7 +67,8 @@ public class Route {
             System.out.println("> Airport-Route map created...");
 
         }catch (FileNotFoundException e){
-            System.out.println("error opening file: check that the input file is in the right directory and the given file name matches");
+            System.out.println("> error opening file: check that the input file is in the right directory and the " +
+                    "given file name matches");
         }
 
         return AirRoutesMap;
@@ -112,7 +115,8 @@ public class Route {
             System.out.println("> Airline-Route map created...");
 
         }catch (FileNotFoundException e){
-            System.out.println("error opening file: check that the input file is in the right directory and the given file name matches");
+            System.out.println("> error opening file: check that the input file is in the right directory and the " +
+                    "given file name matches");
         }
 
         return AirlineRoutesMap;
@@ -149,9 +153,9 @@ public class Route {
         ArrayList<String> solution_path;  // solution path
         HashMap<String, String> ancestors = new HashMap<>();  // child-parent map
 
-        System.out.println("  >> start airport: " + start);
-        System.out.println("  >> goal airport: " + goal);
-        System.out.println("     >>> searching... ");
+        System.out.println("     >>> start airport: " + start);
+        System.out.println("     >>> goal airport: " + goal);
+        System.out.println("       >>>> searching... ");
 
         // add root/start to frontier
         frontier.add(start);
@@ -169,16 +173,18 @@ public class Route {
             // generate successors
             successors = AirRoutesMap.get(node);
 //            System.out.println(node + " >> " + successors + "\n");
-            if(successors.size() > 0){
+            if(successors != null){
                 for(int i = 0; i < successors.size(); i++){
                     if(!frontier.contains(successors.get(i)) && (!explored_set.contains(successors.get(i)))){
                         String child = successors.get(i);
                         ancestors.putIfAbsent(child, node);
                         // goal test  *goal test at child generation, after expansion*
                         if(child.equals(goal)){
-                            System.out.println("found goal: " + child);
+                            System.out.println("         >>>> found goal: " + child);
                             solution_path = solutionPath(ancestors, child, start);
-                            System.out.println(solution_path);
+                            System.out.println("     >>> solution path ~ " + solution_path + " ~");
+                            System.out.println("     >>> total distance ~ " + haversineHelper(solution_path) + " km ~");
+
                             return;
                         }
                         frontier.add(child);
@@ -186,7 +192,7 @@ public class Route {
                 }
             }
             else{
-                System.out.println("DeadEnd: no routes from current node " + node);
+                System.out.println("           - DeadEnd: no routes from current node " + node);
             }
         }
     }
@@ -196,8 +202,8 @@ public class Route {
         ArrayList<String> path_from_goal = new ArrayList<>();
         ArrayList<String> solution_path = new ArrayList<>();
 //        System.out.println(thisMap);
+        path_from_goal.add(goal);
         while(thisMap.get(goal) != null){
-            path_from_goal.add(goal);
             String node = thisMap.get(goal);
             path_from_goal.add(node);
             goal = node;
@@ -207,6 +213,45 @@ public class Route {
             solution_path.add(path_from_goal.get(i));
         }
         return solution_path;
+    }
+
+
+    public static double haversineHelper(ArrayList<String> this_solution_path){
+
+        double latitude_A;
+        double longitude_A;
+        double latitude_B;
+        double longitude_B;
+
+        Airport airport_A = new Airport();
+        Airport airport_B = new Airport();
+
+        double haversine_distance = 0;
+        double distance = 0;
+        Set<ArrayList<String>> all_keys = Airport.AirportMap.keySet();
+
+        for(int i = 0; i < this_solution_path.size()-1; i++){
+
+            String pointA = this_solution_path.get(i);
+            String pointB = this_solution_path.get(i+1);
+
+            for(ArrayList<String> key : all_keys){
+                if(key.get(0).equals(pointA))
+                    airport_A = Airport.AirportMap.get(key);
+
+                if(key.get(0).equals(pointB))
+                    airport_B = Airport.AirportMap.get(key);
+            }
+
+            latitude_A = Double.parseDouble(airport_A.getLatitude());
+            longitude_A = Double.parseDouble(airport_A.getLongitude());
+            latitude_B = Double.parseDouble(airport_B.getLatitude());
+            longitude_B = Double.parseDouble(airport_B.getLongitude());
+
+            distance = HaversineDistance.haversine(latitude_A, longitude_A, latitude_B, longitude_B);
+            haversine_distance = haversine_distance + distance;
+        }
+        return haversine_distance;
     }
 
 
@@ -220,7 +265,7 @@ public class Route {
         AirlineRoutesMap = AirlineRoutesFileReader("/Users/admin/Library/CloudStorage/OneDrive-AshesiUniversity/project_code/projects/Airliner Apps/Airliner Java/src/routes copy.csv");
 //        printMap(AirlineRoutesMap);
 
-        findRoute("ACC", "OUA");
+        findRoute("ACC", "GKA");
 
 
 

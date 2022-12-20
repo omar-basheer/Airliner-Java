@@ -119,7 +119,8 @@ public class Airport {
             System.out.println("> Airports map created...");
 
         }catch (FileNotFoundException e){
-            System.out.println("error opening file: check that the input file is in the right directory and the given file name matches");
+            System.out.println("> error opening file: check that the input file is in the right directory and the " +
+                    "given file name matches");
         }
 
         return AirportMap;

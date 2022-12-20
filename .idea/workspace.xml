@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="054693e2-f6a8-44a1-92d4-aabf4d23cb5f" name="Changes" comment="third commit: Route&#10;now includes search algorithm">
+    <list default="true" id="054693e2-f6a8-44a1-92d4-aabf4d23cb5f" name="Changes" comment="fourth commit">
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Airliner Java/Airliner.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Airliner Java/Airliner.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Airliner Java/Airport.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Airliner Java/Airport.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Airliner Java/Route.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Airliner Java/Route.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Airport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Airport.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Route.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Route.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,15 +29,14 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/Airport.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Airport.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/ReadWrite.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/Route.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <hideBySeverity>
-      <option value="300" />
-    </hideBySeverity>
     <option name="selectedTabId" value="CurrentFile" />
     <option name="sortBySeverity" value="false" />
   </component>
@@ -50,6 +50,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/Users/admin/Library/CloudStorage/OneDrive-AshesiUniversity/project_code/projects/Airliner Apps/Airliner Java",
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
   },
   "keyToStringList": {
@@ -59,7 +60,7 @@
     ]
   }
 }]]></component>
-  <component name="RunManager" selected="Application.Route">
+  <component name="RunManager" selected="Application.Airliner">
     <configuration name="Airliner" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Airliner" />
       <module name="Airliner Java" />
@@ -74,6 +75,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="HaversineDistance" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="HaversineFormula.HaversineDistance" />
+      <module name="Airliner Java" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="HaversineFormula.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Route" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Route" />
       <module name="Airliner Java" />
@@ -83,8 +97,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Route" />
         <item itemvalue="Application.Airliner" />
+        <item itemvalue="Application.HaversineDistance" />
+        <item itemvalue="Application.Route" />
         <item itemvalue="Application.Airport" />
       </list>
     </recent_temporary>
@@ -126,7 +141,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671367281757</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fourth commit">
+      <created>1671402608321</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1671402608321</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -144,7 +166,8 @@
     <MESSAGE value="Airport and Route class files of Airliner-Java" />
     <MESSAGE value="second commit" />
     <MESSAGE value="third commit: Route&#10;now includes search algorithm" />
-    <option name="LAST_COMMIT_MESSAGE" value="third commit: Route&#10;now includes search algorithm" />
+    <MESSAGE value="fourth commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="fourth commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
